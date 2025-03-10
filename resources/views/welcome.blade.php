@@ -101,8 +101,8 @@
                         <i class="far fa-envelope text-primary-yellow mr-2"></i> 
                         <span class="text-sm">dispusip@malukuprov.go.id</span>
                     </div>
-                </div>
-                <div class="flex space-x-4">
+            </div>
+            <div class="flex space-x-4">
                     <a href="#" class="w-8 h-8 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition-all">
                         <i class="fab fa-facebook-f text-sm"></i>
                     </a>
@@ -140,71 +140,71 @@
 
             <!-- Navigation Menu -->
             <div class="border-t border-gray-100">
-                <div class="flex flex-col">
-                    <!-- Main Navigation -->
-                    <div class="flex justify-center">
+            <div class="flex flex-col">
+                <!-- Main Navigation -->
+                <div class="flex justify-center">
                         <ul class="flex flex-wrap items-center">
-                            <li class="relative">
+                        <li class="relative">
                                 <a href="#" class="inline-flex items-center px-6 py-4 font-semibold text-sm uppercase bg-primary-blue text-white rounded-b-xl hover:bg-blue-700 transition-colors">
                                     <i class="fas fa-home mr-2"></i>
                                     BERANDA
                                 </a>
-                            </li>
-                            <li class="relative group">
+                        </li>
+                        <li class="relative group">
                                 <a href="#" class="inline-flex items-center px-6 py-4 font-semibold text-sm uppercase text-gray-700 hover:text-primary-blue transition-colors">
                                     <i class="fas fa-users mr-2"></i>
-                                    PROFIL
+                                PROFIL
                                     <i class="fas fa-chevron-down text-xs ml-2 group-hover:rotate-180 transition-transform duration-300"></i>
                                 </a>
                                 <div class="absolute hidden group-hover:block bg-white shadow-xl rounded-xl w-56 py-2 z-50 transform -translate-x-1/4 mt-1">
                                     <a href="#" class="block px-6 py-2 text-sm text-gray-600 hover:text-primary-blue hover:bg-gray-50">Visi & Misi</a>
                                     <a href="#" class="block px-6 py-2 text-sm text-gray-600 hover:text-primary-blue hover:bg-gray-50">Struktur Organisasi</a>
                                     <a href="#" class="block px-6 py-2 text-sm text-gray-600 hover:text-primary-blue hover:bg-gray-50">Tugas & Fungsi</a>
-                                </div>
-                            </li>
-                            <li class="relative group">
+                            </div>
+                        </li>
+                        <li class="relative group">
                                 <a href="#" class="inline-flex items-center px-6 py-4 font-semibold text-sm uppercase text-gray-700 hover:text-primary-blue transition-colors">
                                     <i class="fas fa-info-circle mr-2"></i>
-                                    INFORMASI
+                                INFORMASI
                                     <i class="fas fa-chevron-down text-xs ml-2 group-hover:rotate-180 transition-transform duration-300"></i>
                                 </a>
                                 <div class="absolute hidden group-hover:block bg-white shadow-xl rounded-xl w-56 py-2 z-50 transform -translate-x-1/4 mt-1">
                                     <a href="#" class="block px-6 py-2 text-sm text-gray-600 hover:text-primary-blue hover:bg-gray-50">Berita</a>
                                     <a href="#" class="block px-6 py-2 text-sm text-gray-600 hover:text-primary-blue hover:bg-gray-50">Pengumuman</a>
                                     <a href="#" class="block px-6 py-2 text-sm text-gray-600 hover:text-primary-blue hover:bg-gray-50">Agenda</a>
-                                </div>
-                            </li>
-                            <li class="relative">
+                            </div>
+                        </li>
+                        <li class="relative">
                                 <a href="#" class="inline-flex items-center px-6 py-4 font-semibold text-sm uppercase text-gray-700 hover:text-primary-blue transition-colors">
                                     <i class="fas fa-book mr-2"></i>
                                     PERPUSTAKAAN
                                 </a>
-                            </li>
-                            <li class="relative group">
+                        </li>
+                        <li class="relative group">
                                 <a href="#" class="inline-flex items-center px-6 py-4 font-semibold text-sm uppercase text-gray-700 hover:text-primary-blue transition-colors">
                                     <i class="fas fa-archive mr-2"></i>
-                                    KEARSIPAN
+                                KEARSIPAN
                                     <i class="fas fa-chevron-down text-xs ml-2 group-hover:rotate-180 transition-transform duration-300"></i>
                                 </a>
                                 <div class="absolute hidden group-hover:block bg-white shadow-xl rounded-xl w-56 py-2 z-50 transform -translate-x-1/4 mt-1">
                                     <a href="#" class="block px-6 py-2 text-sm text-gray-600 hover:text-primary-blue hover:bg-gray-50">Arsip Digital</a>
                                     <a href="#" class="block px-6 py-2 text-sm text-gray-600 hover:text-primary-blue hover:bg-gray-50">Layanan Arsip</a>
-                                </div>
-                            </li>
-                            <li class="relative group">
+                            </div>
+                        </li>
+                        <li class="relative group">
                                 <a href="#" class="inline-flex items-center px-6 py-4 font-semibold text-sm uppercase text-gray-700 hover:text-primary-blue transition-colors">
                                     <i class="fas fa-lightbulb mr-2"></i>
-                                    INOVASI
+                                INOVASI
                                     <i class="fas fa-chevron-down text-xs ml-2 group-hover:rotate-180 transition-transform duration-300"></i>
                                 </a>
                                 <div class="absolute hidden group-hover:block bg-white shadow-xl rounded-xl w-56 py-2 z-50 transform -translate-x-1/4 mt-1">
                                     <a href="#" class="block px-6 py-2 text-sm text-gray-600 hover:text-primary-blue hover:bg-gray-50">Program Unggulan</a>
                                     <a href="#" class="block px-6 py-2 text-sm text-gray-600 hover:text-primary-blue hover:bg-gray-50">Layanan Digital</a>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                    
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                
                     <!-- Secondary Navigation -->
                     <div class="flex justify-center py-3 bg-gray-50 rounded-b-[50px]">
                         <a href="#" class="inline-flex items-center px-6 py-2 mx-2 font-semibold text-sm text-gray-700 hover:text-primary-blue transition-colors">
@@ -234,7 +234,7 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-                <!-- Portal Provinsi Maluku -->
+            <!-- Portal Provinsi Maluku -->
                 <div class="group h-full">
                     <a href="#" class="block h-full">
                         <div class="bg-white rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 relative overflow-hidden h-full flex flex-col justify-between">
@@ -250,7 +250,7 @@
                                 </div>
                                 
                                 <!-- Text Content -->
-                                <div class="text-center">
+                    <div class="text-center">
                                     <h3 class="text-2xl font-bold text-gray-800 mb-2">PORTAL</h3>
                                     <p class="text-lg font-medium text-gray-600">PROVINSI MALUKU</p>
                                 </div>
@@ -262,12 +262,12 @@
                                         <i class="fas fa-arrow-right"></i>
                                     </button>
                                 </div>
-                            </div>
-                        </div>
-                    </a>
+                    </div>
+                </div>
+            </a>
                 </div>
 
-                <!-- Media Center -->
+            <!-- Media Center -->
                 <div class="group h-full">
                     <a href="#" class="block h-full">
                         <div class="bg-primary-yellow rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 relative overflow-hidden h-full flex flex-col justify-between">
@@ -283,7 +283,7 @@
                                 </div>
                                 
                                 <!-- Text Content -->
-                                <div class="text-center">
+                    <div class="text-center">
                                     <h3 class="text-2xl font-bold text-gray-800 mb-2">MEDIACENTER</h3>
                                     <p class="text-lg font-medium text-gray-700">PROVINSI MALUKU</p>
                                 </div>
@@ -295,12 +295,12 @@
                                         <i class="fas fa-arrow-right"></i>
                                     </button>
                                 </div>
-                            </div>
-                        </div>
-                    </a>
+                    </div>
+                </div>
+            </a>
                 </div>
 
-                <!-- iMaluku -->
+            <!-- iMaluku -->
                 <div class="group h-full">
                     <a href="#" class="block h-full">
                         <div class="bg-white rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 relative overflow-hidden h-full flex flex-col justify-between">
@@ -379,8 +379,8 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    
+        </div>
+
                     <!-- Berita 2 -->
                     <div class="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
                         <div class="relative">
@@ -601,11 +601,11 @@
     </div>
 
     <!-- Footer yang Dipercantik -->
-    <footer class="bg-gradient-to-b from-gray-900 to-primary-blue text-white pt-20 pb-6">
+    <footer class="bg-gradient-to-b from-gray-900 to-primary-blue text-white pt-20 pb-6 relative z-20">
         <div class="max-w-6xl mx-auto px-4">
             <div class="grid grid-cols-1 md:grid-cols-12 gap-12 mb-16">
                 <!-- Logo dan Deskripsi -->
-                <div class="md:col-span-5">
+                <div class="md:col-span-4">
                     <div class="flex items-center mb-6">
                         <img src="{{asset('img/logo-provmaluku.png')}}" alt="Logo" class="h-16 w-auto mr-4">
                         <div>
@@ -617,77 +617,100 @@
                         Dinas Perpustakaan dan Kearsipan Provinsi Maluku berkomitmen untuk melestarikan warisan budaya dan pengetahuan Maluku melalui layanan perpustakaan dan kearsipan yang modern.
                     </p>
                     <div class="flex space-x-4">
-                        <a href="#" class="bg-white/10 p-3 rounded-full hover:bg-white/20 transition-colors">
+                        <a href="#" class="bg-white/10 p-3 rounded-full hover:bg-white/20 transition-colors z-30 relative">
                             <i class="fab fa-facebook-f"></i>
                         </a>
-                        <a href="#" class="bg-white/10 p-3 rounded-full hover:bg-white/20 transition-colors">
+                        <a href="#" class="bg-white/10 p-3 rounded-full hover:bg-white/20 transition-colors z-30 relative">
                             <i class="fab fa-instagram"></i>
                         </a>
-                        <a href="#" class="bg-white/10 p-3 rounded-full hover:bg-white/20 transition-colors">
+                        <a href="#" class="bg-white/10 p-3 rounded-full hover:bg-white/20 transition-colors z-30 relative">
                             <i class="fab fa-youtube"></i>
                         </a>
                     </div>
                 </div>
                 
                 <!-- Link Cepat -->
-                <div class="md:col-span-3">
+                <div class="md:col-span-2 relative z-30">
                     <h4 class="text-lg font-semibold mb-6">Link Cepat</h4>
                     <ul class="space-y-4">
                         <li>
-                            <a href="#" class="text-white/70 hover:text-white transition-colors flex items-center">
-                                <i class="fas fa-chevron-right text-xs mr-2"></i>
-                                Beranda
+                            <a href="#" class="text-white/70 hover:text-white transition-colors flex items-center group">
+                                <i class="fas fa-chevron-right text-xs mr-2 group-hover:translate-x-1 transition-transform"></i>
+                                <span>Beranda</span>
                             </a>
                         </li>
                         <li>
-                            <a href="#" class="text-white/70 hover:text-white transition-colors flex items-center">
-                                <i class="fas fa-chevron-right text-xs mr-2"></i>
-                                Profil
+                            <a href="#" class="text-white/70 hover:text-white transition-colors flex items-center group">
+                                <i class="fas fa-chevron-right text-xs mr-2 group-hover:translate-x-1 transition-transform"></i>
+                                <span>Profil</span>
                             </a>
                         </li>
                         <li>
-                            <a href="#" class="text-white/70 hover:text-white transition-colors flex items-center">
-                                <i class="fas fa-chevron-right text-xs mr-2"></i>
-                                Perpustakaan
+                            <a href="#" class="text-white/70 hover:text-white transition-colors flex items-center group">
+                                <i class="fas fa-chevron-right text-xs mr-2 group-hover:translate-x-1 transition-transform"></i>
+                                <span>Perpustakaan</span>
                             </a>
                         </li>
                         <li>
-                            <a href="#" class="text-white/70 hover:text-white transition-colors flex items-center">
-                                <i class="fas fa-chevron-right text-xs mr-2"></i>
-                                Kearsipan
+                            <a href="#" class="text-white/70 hover:text-white transition-colors flex items-center group">
+                                <i class="fas fa-chevron-right text-xs mr-2 group-hover:translate-x-1 transition-transform"></i>
+                                <span>Kearsipan</span>
                             </a>
                         </li>
                     </ul>
                 </div>
                 
                 <!-- Kontak -->
-                <div class="md:col-span-4">
+                <div class="md:col-span-3 relative z-30">
                     <h4 class="text-lg font-semibold mb-6">Kontak Kami</h4>
                     <ul class="space-y-4">
-                        <li class="flex items-start">
-                            <div class="bg-white/10 p-2 rounded-full mr-4 mt-1">
-                                <i class="fas fa-map-marker-alt"></i>
-                            </div>
-                            <span class="text-white/70">Jl. Sultan Babullah No.1, Kota Ambon, Maluku 97128</span>
+                        <li>
+                            <a href="https://maps.google.com/?q=Dinas+Perpustakaan+dan+Kearsipan+Provinsi+Maluku" target="_blank" class="flex items-start group hover:text-white">
+                                <div class="bg-white/10 p-2 rounded-full mr-4 mt-1 group-hover:bg-white/20 transition-colors">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <span class="text-white/70 group-hover:text-white transition-colors">Jl. Sultan Babullah No.1, Kota Ambon, Maluku 97128</span>
+                            </a>
                         </li>
-                        <li class="flex items-center">
-                            <div class="bg-white/10 p-2 rounded-full mr-4">
-                                <i class="fas fa-phone-alt"></i>
-                            </div>
-                            <span class="text-white/70">+62 911 123456</span>
+                        <li>
+                            <a href="tel:+62911123456" class="flex items-center group hover:text-white">
+                                <div class="bg-white/10 p-2 rounded-full mr-4 group-hover:bg-white/20 transition-colors">
+                                    <i class="fas fa-phone-alt"></i>
+                                </div>
+                                <span class="text-white/70 group-hover:text-white transition-colors">+62 911 123456</span>
+                            </a>
                         </li>
-                        <li class="flex items-center">
-                            <div class="bg-white/10 p-2 rounded-full mr-4">
-                                <i class="fas fa-envelope"></i>
-                            </div>
-                            <span class="text-white/70">dispusip@malukuprov.go.id</span>
+                        <li>
+                            <a href="mailto:dispusip@malukuprov.go.id" class="flex items-center group hover:text-white">
+                                <div class="bg-white/10 p-2 rounded-full mr-4 group-hover:bg-white/20 transition-colors">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <span class="text-white/70 group-hover:text-white transition-colors">dispusip@malukuprov.go.id</span>
+                            </a>
                         </li>
                     </ul>
+                </div>
+
+                <!-- Google Maps -->
+                <div class="md:col-span-3 relative z-30">
+                    <h4 class="text-lg font-semibold mb-6">Lokasi Kami</h4>
+                    <div class="rounded-xl overflow-hidden h-64 hover:shadow-lg transition-shadow">
+                        <iframe 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3981.5026711387247!2d128.18077937497636!3d-3.7018099428621366!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2d6ce85e2f2bc4c3%3A0x6457dc05fb6d2aa1!2sDinas%20Perpustakaan%20dan%20Kearsipan%20Provinsi%20Maluku!5e0!3m2!1sid!2sid!4v1709704251149!5m2!1sid!2sid" 
+                            width="100%" 
+                            height="100%" 
+                            style="border:0;" 
+                            allowfullscreen="" 
+                            loading="lazy" 
+                            referrerpolicy="no-referrer-when-downgrade"
+                            class="w-full h-full">
+                        </iframe>
+                    </div>
                 </div>
             </div>
             
             <!-- Copyright -->
-            <div class="border-t border-white/10 pt-8 text-center">
+            <div class="border-t border-white/10 pt-8 text-center relative z-30">
                 <p class="text-white/60">&copy; 2024 Dinas Perpustakaan dan Kearsipan Provinsi Maluku. Hak Cipta Dilindungi.</p>
             </div>
         </div>
