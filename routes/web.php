@@ -64,6 +64,32 @@ Route::prefix('admin')->name('admin.')->group(function () {
         // Logic untuk menyimpan berita
         return redirect()->route('admin.news.index');
     })->name('news.store');
+
+    // Route untuk halaman kritik & saran admin
+    Route::get('/feedback', function () {
+        return view('admin.feedback');
+    })->name('feedback');
+
+    // Route untuk menangani aksi-aksi pada kritik & saran (opsional, bisa ditambahkan nanti)
+    Route::get('/feedback/{id}', function ($id) {
+        // Logic untuk menampilkan detail
+        return response()->json(['id' => $id]);
+    })->name('feedback.show');
+
+    Route::put('/feedback/{id}/mark-as-read', function ($id) {
+        // Logic untuk menandai sudah dibaca
+        return response()->json(['message' => 'Marked as read']);
+    })->name('feedback.mark-read');
+
+    Route::put('/feedback/{id}/archive', function ($id) {
+        // Logic untuk mengarsipkan
+        return response()->json(['message' => 'Archived']);
+    })->name('feedback.archive');
+
+    Route::delete('/feedback/{id}', function ($id) {
+        // Logic untuk menghapus
+        return response()->json(['message' => 'Deleted']);
+    })->name('feedback.delete');
 });
 
 require __DIR__ . '/auth.php';

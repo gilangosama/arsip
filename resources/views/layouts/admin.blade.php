@@ -26,6 +26,10 @@
                     <i class="fas fa-newspaper w-6"></i>
                     <span>Berita</span>
                 </a>
+                <a href="/admin/feedback" class="flex items-center px-4 py-3 text-gray-300 hover:bg-gray-700 hover:text-white">
+                    <i class="fas fa-comments w-6"></i>
+                    <span>Kritik & Saran</span>
+                </a>
                 {{-- <a href="#" class="flex items-center px-4 py-3 text-gray-300 hover:bg-gray-700 hover:text-white">
                     <i class="fas fa-users w-6"></i>
                     <span>Users</span>
