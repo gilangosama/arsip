@@ -123,14 +123,4 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
-    // 'providers' => [
-    //     Kreait\Laravel\Firebase\ServiceProvider::class,
-    // ],
-
-    // 'aliases' => [
-    //     'Firebase' => Kreait\Laravel\Firebase\Facades\Firebase::class,
-    // ]
-
-
-
 ];

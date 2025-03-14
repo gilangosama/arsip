@@ -5,37 +5,17 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\KritikSaranController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\FirebaseAuthController;
+use App\Http\Controllers\BeritaController;
+use App\Http\Controllers\FirebaseController;
+use App\Http\Controllers\PublicController;
+use App\Http\Middleware\FirebaseAuthMiddleware;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
 
-Route::post('/register', [FirebaseAuthController::class, 'register']);
-Route::post('/login', [FirebaseAuthController::class, 'login']);
-
-
-// Route::get('/register-firebase', function () {
-//     $factory = (new \Kreait\Firebase\Factory)->withServiceAccount(storage_path('app/firebase/arsip-6a1c0-firebase-adminsdk-fbsvc-317a0f9d1f.json'));
-//     $auth = $factory->createAuth();
-
-//     $user = $auth->createUser([
-//         'email' => 'user@example.com',
-//         'password' => 'password123',
-//     ]);
-
-//     return "User berhasil dibuat: " . $user->uid;
-// });
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->name('dashboard');
-// Route::middleware('guest')->group(function () {
-//     Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
-//     Route::post('/login', [AuthenticatedSessionController::class, 'store']);
-// });
-
-Route::middleware('auth')->group(function () {
+Route::middleware([FirebaseAuthMiddleware::class])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -47,23 +27,17 @@ Route::middleware('auth')->group(function () {
 // });
 Route::post('/kritik-saran', [KritikSaranController::class, 'store'])->name('kritik-saran.store');
 
-Route::get('/berita', function () {
-    return view('news');
-})->name('news.index');
+Route::get('/berita', [PublicController::class, 'news'])->name('news.index');
+Route::get('/berita/search', [PublicController::class, 'filterNews'])->name('news.filter');
 
-Route::prefix('admin')->name('admin.')->group(function () {
-    Route::get('/news', function () {
-        return view('admin.news.index');
-    })->name('news.index');
-
-    Route::get('/news/create', function () {
-        return view('admin.news.create');
-    })->name('news.create');
-
-    Route::post('/news', function () {
-        // Logic untuk menyimpan berita
-        return redirect()->route('admin.news.index');
-    })->name('news.store');
+Route::middleware([FirebaseAuthMiddleware::class])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/news', [BeritaController::class, 'index'])->name('news.index');
+    Route::get('/news/show/{id}', [BeritaController::class, 'show'])->name('news.show');
+    Route::get('/news/create', [BeritaController::class, 'create'])->name('news.create');
+    Route::post('/news/store', [BeritaController::class, 'store'])->name('news.store');
+    Route::put('/news/update/{id}', [BeritaController::class, 'update'])->name('news.update');
+    Route::get('/news/edit/{id}', [BeritaController::class, 'edit'])->name('news.edit');
+    Route::delete('/news/destroy/{id}', [BeritaController::class, 'destroy'])->name('news.destroy');
 
     // Route untuk halaman kritik & saran admin
     Route::get('/feedback', function () {
@@ -91,5 +65,14 @@ Route::prefix('admin')->name('admin.')->group(function () {
         return response()->json(['message' => 'Deleted']);
     })->name('feedback.delete');
 });
+
+// firebase crud
+Route::get('/firebase', [FirebaseController::class, 'index'])->name('firebase.index');
+Route::get('/signup', [FirebaseController::class, 'signUp'])->name('firebase.signup');
+Route::get('/signin', [FirebaseController::class, 'signIn'])->name('firebase.signin');
+Route::get('/set', [FirebaseController::class, 'set'])->name('firebase.set');
+Route::get('/read', [FirebaseController::class, 'read'])->name('firebase.read');
+Route::get('/check', [FirebaseController::class, 'userCheck'])->name('firebase.checkuser');
+
 
 require __DIR__ . '/auth.php';

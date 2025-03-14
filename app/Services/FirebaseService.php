@@ -11,8 +11,6 @@ class FirebaseService
 
     public function __construct()
     {
-        // dd(file_exists(storage_path('app/firebase/firebase-adminsdk.json')));
-
         $this->auth = (new Factory)
             ->withServiceAccount(storage_path(env('app/firebase/firebase-adminsdk.json')))
             ->createAuth();
