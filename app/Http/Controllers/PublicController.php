@@ -67,4 +67,42 @@ class PublicController extends Controller
     {
         return view('public.contact');
     }
+
+    public function showNews($id)
+    {
+        $news = $this->database->getReference('news/' . $id)->getValue();
+        
+        if (!$news) {
+            abort(404);
+        }
+
+        return view('news-detail', compact('news'));
+    }
+
+    public function index()
+    {
+        $news = $this->database->getReference('news')->getValue() ?? [];
+        return view('welcome', compact('news'));
+    }
+
+    public function welcome()
+    {
+        try {
+            // Ambil data berita dari Firebase
+            $news = $this->database->getReference('news')->getValue() ?? [];
+            
+            // Urutkan berita berdasarkan created_at terbaru
+            if (!empty($news)) {
+                uasort($news, function($a, $b) {
+                    return strtotime($b['created_at']) - strtotime($a['created_at']);
+                });
+            }
+            
+            return view('welcome', compact('news'));
+        } catch (\Exception $e) {
+            // Jika terjadi error, tampilkan array kosong
+            $news = [];
+            return view('welcome', compact('news'));
+        }
+    }
 }

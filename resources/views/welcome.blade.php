@@ -35,6 +35,35 @@
         .text-shadow {
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
+
+        .carousel-item {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity 0.7s ease-in-out, z-index 0.7s step-end;
+        }
+
+        .carousel-item.active {
+            opacity: 1;
+            z-index: 1;
+            transition: opacity 0.7s ease-in-out, z-index 0.7s step-start;
+        }
+
+        #prevSlide, #nextSlide {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        #prevSlide:hover, #nextSlide:hover {
+            background-color: rgba(0, 0, 0, 0.5);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        @media (max-width: 768px) {
+            #prevSlide, #nextSlide {
+                display: none;
+            }
+        }
     </style>
 </head>
 <body class="relative">
@@ -75,12 +104,12 @@
             </div>
             
             <!-- Carousel controls -->
-            <button class="absolute left-4 top-1/2 -translate-y-1/2 bg-black bg-opacity-30 hover:bg-opacity-50 text-white p-3 rounded-full z-30">
+            <button id="prevSlide" class="absolute left-4 top-1/2 -translate-y-1/2 bg-black bg-opacity-30 hover:bg-opacity-50 text-white p-3 rounded-full z-30">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
                 </svg>
             </button>
-            <button class="absolute right-4 top-1/2 -translate-y-1/2 bg-black bg-opacity-30 hover:bg-opacity-50 text-white p-3 rounded-full z-30">
+            <button id="nextSlide" class="absolute right-4 top-1/2 -translate-y-1/2 bg-black bg-opacity-30 hover:bg-opacity-50 text-white p-3 rounded-full z-30">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                 </svg>
@@ -125,7 +154,7 @@
                 {{-- <div class="flex items-center space-x-4">
                     <img src="{{asset('img/logo-provmaluku.png')}}" alt="Logo" class="h-16 w-auto">
                     <div>
-                        <h1 class="text-2xl font-bold text-gray-800">DISPUSIP</h1>
+                        <h1 class="text-2xl font-zbold text-gray-800">DISPUSIP</h1>
                         <p class="text-sm text-gray-600">Dinas Perpustakaan dan Kearsipan Provinsi Maluku</p>
                     </div>
                 </div> --}}
@@ -169,7 +198,7 @@
                                     <i class="fas fa-chevron-down text-xs ml-2 group-hover:rotate-180 transition-transform duration-300"></i>
                                 </a>
                                 <div class="absolute hidden group-hover:block bg-white shadow-xl rounded-xl w-56 py-2 z-50 transform -translate-x-1/4 mt-1">
-                                    <a href="#" class="block px-6 py-2 text-sm text-gray-600 hover:text-primary-blue hover:bg-gray-50">Berita</a>
+                                    <a href="{{ route('news.index') }}" class="block px-6 py-2 text-sm text-gray-600 hover:text-primary-blue hover:bg-gray-50">Berita</a>
                                     <a href="#" class="block px-6 py-2 text-sm text-gray-600 hover:text-primary-blue hover:bg-gray-50">Pengumuman</a>
                                     <a href="#" class="block px-6 py-2 text-sm text-gray-600 hover:text-primary-blue hover:bg-gray-50">Agenda</a>
                             </div>
@@ -347,153 +376,64 @@
                 <div class="w-24 h-1 bg-primary-blue mx-auto rounded-full"></div>
             </div>
             
-            <div class="relative">
-                <!-- Carousel Navigation Buttons -->
-                <button class="absolute left-0 top-1/2 -translate-y-1/2 bg-white rounded-full p-4 shadow-lg z-10 -ml-6 hover:bg-primary-blue hover:text-white transition-all duration-300">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-                    </svg>
-                </button>
-                
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <!-- Berita 1 -->
-                    <div class="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
-                        <div class="relative">
-                            <div class="absolute top-4 left-4 bg-primary-blue text-white text-xs px-3 py-1 rounded-full font-medium tracking-wider">UMUM</div>
-                            <img src="{{asset('img/berita1.jpg')}}" alt="Berita 1" class="w-full h-56 object-cover" onerror="this.src='https://source.unsplash.com/random/800x600/?meeting'">
-                            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent h-20"></div>
-                        </div>
-                        <div class="p-6">
-                            <h3 class="font-bold text-xl mb-3 line-clamp-2 hover:text-primary-blue transition-colors">
-                                <a href="#">Lembaga Kearsipan Daerah Gelar Sosialisasi Akuisisi Arsip Statis dan Autentikasi Arsip Terjaga</a>
-                            </h3>
-                            <p class="text-gray-600 mb-4 line-clamp-3">Bidang Pengelolaan, Layanan dan Pemanfaatan Arsip-Dinas perpustakaan dan Kearsipan Provinsi Maluku melaksanakan Sosialisasi Akuisisi Arsip Statis dan Autentikasi Arsip Terjaga kepada 11 OPD Lingkup Pemerintah Provinsi Maluku.</p>
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center text-sm text-gray-500">
-                                    <i class="far fa-user mr-2"></i>
-                                    <span>FREDERICK REUBEN</span>
-                                </div>
-                                <div class="flex items-center text-sm text-gray-500">
-                                    <i class="far fa-calendar mr-2"></i>
-                                    <span>FEBRUARY 22, 2025</span>
-                                </div>
-                            </div>
-                        </div>
-        </div>
+            <div id="news-carousel" class="relative">
+                <!-- Carousel Container -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    @if(!empty($news))
+                        @php
+                            $latestNews = array_slice($news, 0, 3, true);
+                        @endphp
 
-                    <!-- Berita 2 -->
-                    <div class="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
-                        <div class="relative">
-                            <div class="absolute top-4 left-4 bg-primary-blue text-white text-xs px-3 py-1 rounded-full font-medium tracking-wider">DAERAHDINASUMUM</div>
-                            <img src="{{asset('img/berita2.jpg')}}" alt="Berita 2" class="w-full h-56 object-cover" onerror="this.src='https://source.unsplash.com/random/800x600/?archive'">
-                            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent h-20"></div>
-                        </div>
-                        <div class="p-6">
-                            <h3 class="font-bold text-xl mb-3 line-clamp-2 hover:text-primary-blue transition-colors">
-                                <a href="#">Dinas Perpustakaan dan Kearsipan Provinsi Maluku melakukan kegiatan alih media tahap dua di Negeri Passo</a>
-                            </h3>
-                            <p class="text-gray-600 mb-4 line-clamp-3">Hari Jumat, 21 Juni 2024 - Dinas Perpustakaan dan Kearsipan Provinsi Maluku melakukan kegiatan alih media tahap dua di Negeri Passo. Dokumen yang berhasil dialihmedikan yakni Koleksi Pribadi Peninggalan Zaman</p>
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center text-sm text-gray-500">
-                                    <i class="far fa-user mr-2"></i>
-                                    <span>WBWRJ</span>
+                        @foreach($latestNews as $id => $item)
+                            <div class="carousel-item bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300">
+                                <div class="relative">
+                                    @if(isset($item['image']) && Storage::disk('public')->exists($item['image']))
+                                        <img src="{{ Storage::url($item['image']) }}" 
+                                             alt="{{ $item['title'] }}"
+                                             class="w-full h-48 object-cover">
+                                    @else
+                                        <img src="{{ asset('img/default-news.jpg') }}" 
+                                             alt="Default Image"
+                                             class="w-full h-48 object-cover">
+                                    @endif
+                                    <div class="absolute top-4 left-4 bg-primary-blue text-white text-xs px-3 py-1 rounded-full">
+                                        {{ strtoupper($item['category'] ?? 'UMUM') }}
+                                    </div>
                                 </div>
-                                <div class="flex items-center text-sm text-gray-500">
-                                    <i class="far fa-calendar mr-2"></i>
-                                    <span>JUNE 22, 2024</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Berita 3 -->
-                    <div class="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
-                        <div class="relative">
-                            <div class="absolute top-4 left-4 bg-primary-blue text-white text-xs px-3 py-1 rounded-full font-medium tracking-wider">DAERAHDINAS</div>
-                            <img src="{{asset('img/berita3.jpg')}}" alt="Berita 3" class="w-full h-56 object-cover" onerror="this.src='https://source.unsplash.com/random/800x600/?government'">
-                            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent h-20"></div>
-                        </div>
-                        <div class="p-6">
-                            <h3 class="font-bold text-xl mb-3 line-clamp-2 hover:text-primary-blue transition-colors">
-                                <a href="#">Pengawasan Kearsipan Internal di Lingkup Pemerintah Provinsi Maluku</a>
-                            </h3>
-                            <p class="text-gray-600 mb-4 line-clamp-3">Hai #SahabatArsip, mimin mau kenalin Tim yang bertugas melaksanakan Pengawasan Kearsipan Internal di Lingkup Pemerintah Provinsi Maluku. Tim ini akan melaksanakan tugas dari tanggal 4 - 28 Juni 2024</p>
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center text-sm text-gray-500">
-                                    <i class="far fa-user mr-2"></i>
-                                    <span>WBWRJ</span>
-                                </div>
-                                <div class="flex items-center text-sm text-gray-500">
-                                    <i class="far fa-calendar mr-2"></i>
-                                    <span>JUNE 5, 2024</span>
+                                <div class="p-6">
+                                    <h3 class="font-bold text-xl mb-3 line-clamp-2">
+                                        <a href="{{ route('news.show', $id) }}" class="hover:text-primary-blue transition-colors">
+                                            {{ $item['title'] }}
+                                        </a>
+                                    </h3>
+                                    <p class="text-gray-600 mb-4 line-clamp-3">
+                                        {{ strip_tags($item['content']) }}
+                                    </p>
+                                    <a href="{{ route('news.show', $id) }}" 
+                                       class="inline-flex items-center text-primary-blue hover:underline">
+                                        Baca selengkapnya
+                                        <i class="fas fa-arrow-right ml-2"></i>
+                                    </a>
                                 </div>
                             </div>
+                        @endforeach
+                    @else
+                        <div class="col-span-3 text-center py-12">
+                            <p class="text-gray-500">Belum ada berita yang dipublikasikan</p>
                         </div>
-                    </div>
+                    @endif
                 </div>
-                
-                <!-- Next Button -->
-                <button class="absolute right-0 top-1/2 -translate-y-1/2 bg-white rounded-full p-4 shadow-lg z-10 -mr-6 hover:bg-primary-blue hover:text-white transition-all duration-300">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                    </svg>
-                </button>
-            </div>
 
-            <!-- Tombol Baca Berita Lainnya -->
-            <div class="text-center mt-12">
-                <a href="{{ route('news.index') }}" class="inline-flex items-center px-8 py-3 bg-primary-blue text-white font-semibold rounded-full hover:bg-blue-700 transition-colors duration-300 transform hover:scale-105">
-                    <span>Baca Berita Lainnya</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                    </svg>
-                </a>
+                <!-- Navigation Buttons -->
+                <button id="prevBtn" class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-6 bg-white p-3 rounded-full shadow-lg hover:bg-gray-100 transition-all">
+                    <i class="fas fa-chevron-left text-gray-600"></i>
+                </button>
+                <button id="nextBtn" class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-6 bg-white p-3 rounded-full shadow-lg hover:bg-gray-100 transition-all">
+                    <i class="fas fa-chevron-right text-gray-600"></i>
+                </button>
             </div>
         </div>
     </div>
-
-    <script>
-        // Simple carousel functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            const items = document.querySelectorAll('.carousel-item');
-            const nextBtn = document.querySelector('button:last-of-type');
-            const prevBtn = document.querySelector('button:first-of-type');
-            let currentIndex = 0;
-            
-            function showSlide(index) {
-                items.forEach(item => {
-                    item.classList.remove('opacity-100');
-                    item.classList.add('opacity-0');
-                });
-                items[index].classList.remove('opacity-0');
-                items[index].classList.add('opacity-100');
-            }
-            
-            function nextSlide() {
-                currentIndex = (currentIndex + 1) % items.length;
-                showSlide(currentIndex);
-            }
-            
-            function prevSlide() {
-                currentIndex = (currentIndex - 1 + items.length) % items.length;
-                showSlide(currentIndex);
-            }
-            
-            // Auto slide every 5 seconds
-            const interval = setInterval(nextSlide, 5000);
-            
-            // Event listeners for buttons
-            nextBtn.addEventListener('click', function() {
-                clearInterval(interval);
-                nextSlide();
-            });
-            
-            prevBtn.addEventListener('click', function() {
-                clearInterval(interval);
-                prevSlide();
-            });
-        });
-    </script>
 
     <!-- Form Kritik dan Saran Section -->
     <div class="bg-gradient-to-b from-gray-50 to-gray-100 py-20">
@@ -503,102 +443,158 @@
                 <p class="text-gray-600 text-lg">Kami sangat menghargai setiap masukan dari Anda untuk meningkatkan layanan kami</p>
             </div>
 
-            <div class="bg-white rounded-2xl shadow-xl overflow-hidden transform hover:scale-[1.02] transition-transform duration-300">
-                <div class="md:flex">
-                    <!-- Bagian Kiri - Informasi Kontak -->
-                    <div class="bg-gradient-to-br from-primary-blue to-blue-800 text-white p-10 md:w-2/5 relative overflow-hidden">
-                        <div class="relative z-10">
-                            <h3 class="text-3xl font-bold mb-8">Hubungi Kami</h3>
-                            
-                            <div class="space-y-8">
-                                <div class="flex items-start space-x-4">
-                                    <div class="bg-white/10 p-3 rounded-full">
-                                        <i class="fas fa-map-marker-alt text-xl"></i>
-                                    </div>
-                                    <div>
-                                        <h4 class="font-semibold text-lg mb-1">Alamat</h4>
-                                        <p class="text-white/80">Jl. Sultan Babullah No.1, Kota Ambon, Maluku 97128</p>
-                                    </div>
+            <div class="relative max-w-2xl mx-auto p-8 bg-white rounded-2xl shadow-lg z-20">
+                <!-- Header Form -->
+                <div class="relative text-center mb-8 z-20">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-2">Hubungi Kami</h2>
+                    <p class="text-gray-600 text-sm">Kami sangat menghargai setiap masukan dari Anda</p>
                                 </div>
                                 
-                                <div class="flex items-start space-x-4">
-                                    <div class="bg-white/10 p-3 rounded-full">
-                                        <i class="fas fa-envelope text-xl"></i>
-                                    </div>
-                                    <div>
-                                        <h4 class="font-semibold text-lg mb-1">Email</h4>
-                                        <p class="text-white/80">dispusip@malukuprov.go.id</p>
-                                    </div>
-                                </div>
-                                
-                                <div class="flex items-start space-x-4">
-                                    <div class="bg-white/10 p-3 rounded-full">
-                                        <i class="fas fa-phone text-xl"></i>
-                                    </div>
-                                    <div>
-                                        <h4 class="font-semibold text-lg mb-1">Telepon</h4>
-                                        <p class="text-white/80">+62 911 123456</p>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="mt-12">
-                                <h4 class="font-semibold text-lg mb-4">Ikuti Kami</h4>
-                                <div class="flex space-x-4">
-                                    <a href="#" class="bg-white/10 p-3 rounded-full hover:bg-white/20 transition-colors">
-                                        <i class="fab fa-facebook-f text-xl"></i>
-                                    </a>
-                                    <a href="#" class="bg-white/10 p-3 rounded-full hover:bg-white/20 transition-colors">
-                                        <i class="fab fa-instagram text-xl"></i>
-                                    </a>
-                                    <a href="#" class="bg-white/10 p-3 rounded-full hover:bg-white/20 transition-colors">
-                                        <i class="fab fa-youtube text-xl"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Background Pattern -->
-                        <div class="absolute inset-0 opacity-10">
-                            <div class="absolute -right-20 -bottom-20 w-64 h-64 rounded-full border-8 border-white/20"></div>
-                            <div class="absolute -left-20 -top-20 w-64 h-64 rounded-full border-8 border-white/20"></div>
-                        </div>
+                <form id="contactForm" class="space-y-6 relative z-30">
+                    <!-- Nama -->
+                    <div class="group relative">
+                        <label for="name" class="block text-sm font-semibold text-gray-700 mb-2 relative z-20">
+                            <i class="fas fa-user text-primary-blue mr-2"></i>Nama
+                        </label>
+                        <input type="text" 
+                               id="name" 
+                               name="name" 
+                               class="w-full px-4 py-3 bg-gray-50 rounded-lg border border-gray-200 
+                                      focus:border-primary-blue focus:ring-2 focus:ring-primary-blue/20 
+                                      transition-all duration-300 outline-none
+                                      hover:border-primary-blue/50
+                                      relative z-20"
+                               placeholder="Masukkan nama lengkap"
+                               style="pointer-events: auto">
                     </div>
                     
-                    <!-- Bagian Kanan - Form -->
-                    <div class="p-10 md:w-3/5 bg-white">
-                        <form id="kritikSaranForm" action="{{ route('kritik-saran.store') }}" method="POST" class="space-y-6">
-                            @csrf
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div class="form-group">
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Nama Lengkap</label>
-                                    <input type="text" name="name" class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-primary-blue focus:border-transparent transition-all" placeholder="Masukkan nama lengkap">
-                                </div>
-                                <div class="form-group">
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
-                                    <input type="email" name="email" class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-primary-blue focus:border-transparent transition-all" placeholder="Masukkan email">
-                                </div>
+                    <!-- Email -->
+                    <div class="group relative">
+                        <label for="email" class="block text-sm font-semibold text-gray-700 mb-2 relative z-20">
+                            <i class="fas fa-envelope text-primary-blue mr-2"></i>Email
+                        </label>
+                        <input type="email" 
+                               id="email" 
+                               name="email" 
+                               class="w-full px-4 py-3 bg-gray-50 rounded-lg border border-gray-200 
+                                      focus:border-primary-blue focus:ring-2 focus:ring-primary-blue/20 
+                                      transition-all duration-300 outline-none
+                                      hover:border-primary-blue/50
+                                      relative z-20"
+                               placeholder="Masukkan alamat email"
+                               style="pointer-events: auto">
                             </div>
                             
-                            <div class="form-group">
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Subjek</label>
-                                <input type="text" name="subject" class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-primary-blue focus:border-transparent transition-all" placeholder="Masukkan subjek">
+                    <!-- Subjek -->
+                    <div class="group relative">
+                        <label for="subject" class="block text-sm font-semibold text-gray-700 mb-2 relative z-20">
+                            <i class="fas fa-heading text-primary-blue mr-2"></i>Subjek
+                        </label>
+                        <input type="text" 
+                               id="subject" 
+                               name="subject" 
+                               class="w-full px-4 py-3 bg-gray-50 rounded-lg border border-gray-200 
+                                      focus:border-primary-blue focus:ring-2 focus:ring-primary-blue/20 
+                                      transition-all duration-300 outline-none
+                                      hover:border-primary-blue/50
+                                      relative z-20"
+                               placeholder="Masukkan subjek pesan"
+                               style="pointer-events: auto">
                             </div>
                             
-                            <div class="form-group">
-                                <label class="block text-sm font-medium text-gray-700 mb-2">Pesan</label>
-                                <textarea name="message" rows="5" class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-primary-blue focus:border-transparent transition-all resize-none" placeholder="Tulis pesan Anda di sini..."></textarea>
+                    <!-- Pesan -->
+                    <div class="group relative">
+                        <label for="message" class="block text-sm font-semibold text-gray-700 mb-2 relative z-20">
+                            <i class="fas fa-message text-primary-blue mr-2"></i>Pesan
+                        </label>
+                        <textarea id="message" 
+                                  name="message" 
+                                  rows="4" 
+                                  class="w-full px-4 py-3 bg-gray-50 rounded-lg border border-gray-200 
+                                         focus:border-primary-blue focus:ring-2 focus:ring-primary-blue/20 
+                                         transition-all duration-300 outline-none resize-none
+                                         hover:border-primary-blue/50
+                                         relative z-20"
+                                  placeholder="Tulis pesan Anda di sini"
+                                  style="pointer-events: auto"></textarea>
                             </div>
                             
-                            <button type="submit" class="w-full bg-primary-blue hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-300 transform hover:scale-[1.02]">
-                                Kirim Pesan
+                    <!-- Submit Button -->
+                    <button type="submit" 
+                            class="w-full bg-primary-blue text-white px-6 py-3.5 rounded-lg 
+                                   font-semibold tracking-wide
+                                   transform transition-all duration-300
+                                   hover:bg-blue-700 hover:shadow-lg 
+                                   active:scale-98 
+                                   focus:ring-4 focus:ring-blue-200
+                                   flex items-center justify-center space-x-2
+                                   relative z-20"
+                            style="pointer-events: auto">
+                        <span>Kirim Pesan</span>
+                        <i class="fas fa-paper-plane"></i>
                             </button>
                         </form>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
+
+    <!-- Tambahkan notifikasi div -->
+    {{-- <div id="notification" class="fixed hidden bottom-4 right-4 p-4 rounded-lg shadow-lg"></div> --}}
+
+        {{-- <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('contactForm');
+            
+            // Remove any existing event listeners
+            const newForm = form.cloneNode(true);
+            form.parentNode.replaceChild(newForm, form);
+            
+            newForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                e.stopPropagation(); // Prevent event bubbling
+                
+                // Tambahkan efek loading pada button
+                const button = this.querySelector('button[type="submit"]');
+                const originalContent = button.innerHTML;
+                button.innerHTML = '';
+                button.classList.add('loading');
+                
+                // Simulasi loading (ganti dengan actual form submission)
+                setTimeout(() => {
+                    button.classList.remove('loading');
+                    button.innerHTML = originalContent;
+                    
+                    // Reset form
+                    this.reset();
+                    
+                    // Tampilkan notifikasi sukses
+                    showNotification('Pesan berhasil terkirim!', 'success');
+                }, 1500);
+            });
+        });
+
+        function showNotification(message, type = 'success') {
+            const notification = document.createElement('div');
+            notification.className = `fixed bottom-4 right-4 px-6 py-3 rounded-lg shadow-lg text-white 
+                                    transform transition-all duration-300 ${type === 'success' ? 'bg-green-500' : 'bg-red-500'}`;
+            notification.style.zIndex = '50';
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            // Animate in
+            setTimeout(() => {
+                notification.style.transform = 'translateY(-10px)';
+            }, 100);
+            
+            // Remove after delay
+            setTimeout(() => {
+                notification.style.transform = 'translateY(10px)';
+                notification.style.opacity = '0';
+                setTimeout(() => notification.remove(), 3000);
+            }, 3000);
+        }
+        </script> --}}
 
     <!-- Footer yang Dipercantik -->
     <footer class="bg-gradient-to-b from-gray-900 to-primary-blue text-white pt-20 pb-6 relative z-20">
@@ -667,24 +663,24 @@
                         <li>
                             <a href="https://maps.google.com/?q=Dinas+Perpustakaan+dan+Kearsipan+Provinsi+Maluku" target="_blank" class="flex items-start group hover:text-white">
                                 <div class="bg-white/10 p-2 rounded-full mr-4 mt-1 group-hover:bg-white/20 transition-colors">
-                                    <i class="fas fa-map-marker-alt"></i>
-                                </div>
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
                                 <span class="text-white/70 group-hover:text-white transition-colors">Jl. Sultan Babullah No.1, Kota Ambon, Maluku 97128</span>
                             </a>
                         </li>
                         <li>
                             <a href="tel:+62911123456" class="flex items-center group hover:text-white">
                                 <div class="bg-white/10 p-2 rounded-full mr-4 group-hover:bg-white/20 transition-colors">
-                                    <i class="fas fa-phone-alt"></i>
-                                </div>
+                                <i class="fas fa-phone-alt"></i>
+                            </div>
                                 <span class="text-white/70 group-hover:text-white transition-colors">+62 911 123456</span>
                             </a>
                         </li>
                         <li>
                             <a href="mailto:dispusip@malukuprov.go.id" class="flex items-center group hover:text-white">
                                 <div class="bg-white/10 p-2 rounded-full mr-4 group-hover:bg-white/20 transition-colors">
-                                    <i class="fas fa-envelope"></i>
-                                </div>
+                                <i class="fas fa-envelope"></i>
+                            </div>
                                 <span class="text-white/70 group-hover:text-white transition-colors">dispusip@malukuprov.go.id</span>
                             </a>
                         </li>
@@ -737,6 +733,113 @@
             });
             });
         });
+    </script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Cache gambar default
+        const defaultImg = new Image();
+        defaultImg.src = "{{ asset('img/default-news.jpg') }}";
+        
+        // Lazy loading untuk gambar
+        const lazyImages = document.querySelectorAll("img.lazy");
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    img.src = img.dataset.src;
+                    img.classList.remove("lazy");
+                    observer.unobserve(img);
+                }
+            });
+        });
+
+        lazyImages.forEach(img => imageObserver.observe(img));
+    });
+    </script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const carousel = document.getElementById('news-carousel');
+        const items = carousel.getElementsByClassName('carousel-item');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        let currentSlide = 0;
+        const totalSlides = Math.ceil(items.length / 3);
+
+        // Fungsi untuk menampilkan slide
+        function showSlide(index) {
+            for(let i = 0; i < items.length; i++) {
+                if(i >= index * 3 && i < (index * 3) + 3) {
+                    items[i].classList.remove('hidden');
+                } else {
+                    items[i].classList.add('hidden');
+                }
+            }
+        }
+
+        // Event listener untuk tombol next
+        nextBtn.addEventListener('click', () => {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            showSlide(currentSlide);
+        });
+
+        // Event listener untuk tombol previous
+        prevBtn.addEventListener('click', () => {
+            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+            showSlide(currentSlide);
+        });
+
+        // Auto slide setiap 5 detik
+        setInterval(() => {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            showSlide(currentSlide);
+        }, 5000);
+
+        // Tampilkan slide pertama
+        showSlide(0);
+    });
+    </script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Script untuk carousel header
+        const headerCarousel = document.getElementById('carousel');
+        const slides = headerCarousel.getElementsByClassName('carousel-item');
+        let currentIndex = 0;
+
+        // Fungsi untuk menampilkan slide
+        function showSlide(index) {
+            // Sembunyikan semua slide
+            for(let i = 0; i < slides.length; i++) {
+                slides[i].style.opacity = '0';
+                slides[i].style.zIndex = '0';
+            }
+            // Tampilkan slide yang aktif
+            slides[index].style.opacity = '1';
+            slides[index].style.zIndex = '1';
+        }
+
+        // Event listener untuk tombol previous
+        const prevSlide = document.getElementById('prevSlide');
+        prevSlide.addEventListener('click', function() {
+            currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+            showSlide(currentIndex);
+        });
+
+        // Event listener untuk tombol next
+        const nextSlide = document.getElementById('nextSlide');
+        nextSlide.addEventListener('click', function() {
+            currentIndex = (currentIndex + 1) % slides.length;
+            showSlide(currentIndex);
+        });
+
+        // Auto slide setiap 5 detik
+        setInterval(function() {
+            currentIndex = (currentIndex + 1) % slides.length;
+            showSlide(currentIndex);
+        }, 5000);
+
+        // Tampilkan slide pertama
+        showSlide(0);
+    });
     </script>
 </body>
 </html>

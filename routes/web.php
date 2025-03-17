@@ -14,6 +14,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// Dengan route baru yang mengarah ke controller
+Route::get('/', [PublicController::class, 'welcome'])->name('welcome');
 
 Route::middleware([FirebaseAuthMiddleware::class])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -25,14 +27,15 @@ Route::middleware([FirebaseAuthMiddleware::class])->group(function () {
 //         return view('dashboard');
 //     })->name('dashboard');
 // });
-Route::post('/kritik-saran', [KritikSaranController::class, 'store'])->name('kritik-saran.store');
+// Route::post('/kritik-saran', [KritikSaranController::class, 'store'])->name('kritik-saran.store');
 
 Route::get('/berita', [PublicController::class, 'news'])->name('news.index');
 Route::get('/berita/search', [PublicController::class, 'filterNews'])->name('news.filter');
+Route::get('/berita/{id}', [PublicController::class, 'showNews'])->name('news.show');
 
 Route::middleware([FirebaseAuthMiddleware::class])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/news', [BeritaController::class, 'index'])->name('news.index');
-    Route::get('/news/show/{id}', [BeritaController::class, 'show'])->name('news.show');
+    Route::get('/news/{id}', [BeritaController::class, 'show'])->name('news.show');
     Route::get('/news/create', [BeritaController::class, 'create'])->name('news.create');
     Route::post('/news/store', [BeritaController::class, 'store'])->name('news.store');
     Route::put('/news/update/{id}', [BeritaController::class, 'update'])->name('news.update');
@@ -64,6 +67,8 @@ Route::middleware([FirebaseAuthMiddleware::class])->prefix('admin')->name('admin
         // Logic untuk menghapus
         return response()->json(['message' => 'Deleted']);
     })->name('feedback.delete');
+
+    Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 });
 
 // firebase crud

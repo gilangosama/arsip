@@ -37,40 +37,21 @@ class AuthenticatedSessionController extends Controller
     /**
      * Handle an incoming authentication request.
      */
-    public function store(LoginRequest $request)
+    public function store(Request $request)
     {
-        // $request->authenticate();
-
-        $request->session()->regenerate();
-
-        // return redirect()->intended(route('dashboard', absolute: false));
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
-
         try {
             $signInResult = $this->auth->signInWithEmailAndPassword($request->email, $request->password);
-            // dump($signInResult->data());
-
+            
             Session::put('firebaseUserId', $signInResult->firebaseUserId());
             Session::put('idToken', $signInResult->idToken());
             Session::save();
-            // dd($signInResult);
+            
             Alert::toast('Login berhasil!', 'success');
-            return redirect()->intended(route('news.index', absolute: false));
+            return redirect()->route('admin.news.index');
         } catch (\Throwable $e) {
-            switch ($e->getMessage()) {
-                case 'INVALID_PASSWORD':
-                    dd("Kata sandi salah!.");
-                    break;
-                case 'EMAIL_NOT_FOUND':
-                    dd("Email tidak ditemukan.");
-                    break;
-                default:
-                    dd($e->getMessage());
-                    break;
-            }
+            return back()->withErrors([
+                'email' => 'Email atau password salah.',
+            ]);
         }
     }
 
@@ -79,22 +60,21 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request)
     {
-        // Auth::guard('web')->logout();
-
-        // $request->session()->invalidate();
-
-        // $request->session()->regenerateToken();
-
-        // return redirect('/');
         if (Session::has('firebaseUserId') && Session::has('idToken')) {
-            // dd("User masih login.");
-            $this->auth->revokeRefreshTokens(Session::get('firebaseUserId'));
-            Session::forget('firebaseUserId');
-            Session::forget('idToken');
-            Session::save();
-            return redirect()->route('login');
-        } else {
-            return redirect()->route('login');
+            try {
+                $this->auth->revokeRefreshTokens(Session::get('firebaseUserId'));
+                Session::forget('firebaseUserId');
+                Session::forget('idToken');
+                Session::save();
+                
+                Alert::toast('Logout berhasil!', 'success');
+                return redirect()->route('login');
+            } catch (\Exception $e) {
+                Alert::error('Error', 'Terjadi kesalahan saat logout');
+                return back();
+            }
         }
+        
+        return redirect()->route('login');
     }
 }
