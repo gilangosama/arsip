@@ -10,11 +10,12 @@ use App\Http\Controllers\FirebaseController;
 use App\Http\Controllers\PublicController;
 use App\Http\Middleware\FirebaseAuthMiddleware;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Hapus route ini karena duplikat
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
-// Dengan route baru yang mengarah ke controller
+// Gunakan hanya route ini
 Route::get('/', [PublicController::class, 'welcome'])->name('welcome');
 
 Route::middleware([FirebaseAuthMiddleware::class])->group(function () {

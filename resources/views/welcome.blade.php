@@ -369,69 +369,53 @@
     <div class="h-12 bg-white"></div>
 
     <!-- Berita Terkini Section -->
-    <div class="container mx-auto px-4 relative z-10 bg-white">
-        <div class="max-w-6xl mx-auto mt-16 mb-12 px-4">
-            <div class="text-center mb-12">
-                <h2 class="text-4xl font-bold text-gray-800 mb-4">BERITA TERKINI</h2>
-                <div class="w-24 h-1 bg-primary-blue mx-auto rounded-full"></div>
-            </div>
-            
-            <div id="news-carousel" class="relative">
-                <!-- Carousel Container -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    @if(!empty($news))
-                        @php
-                            $latestNews = array_slice($news, 0, 3, true);
-                        @endphp
+    <div class="container mx-auto px-4 py-16">
+        <div class="text-center mb-12">
+            <h2 class="text-4xl font-bold text-gray-800 mb-4">BERITA TERKINI</h2>
+            <div class="w-24 h-1 bg-primary-blue mx-auto rounded-full"></div>
+        </div>
 
-                        @foreach($latestNews as $id => $item)
-                            <div class="carousel-item bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300">
-                                <div class="relative">
-                                    @if(isset($item['image']) && Storage::disk('public')->exists($item['image']))
-                                        <img src="{{ Storage::url($item['image']) }}" 
-                                             alt="{{ $item['title'] }}"
-                                             class="w-full h-48 object-cover">
-                                    @else
-                                        <img src="{{ asset('img/default-news.jpg') }}" 
-                                             alt="Default Image"
-                                             class="w-full h-48 object-cover">
-                                    @endif
-                                    <div class="absolute top-4 left-4 bg-primary-blue text-white text-xs px-3 py-1 rounded-full">
-                                        {{ strtoupper($item['category'] ?? 'UMUM') }}
-                                    </div>
-                                </div>
-                                <div class="p-6">
-                                    <h3 class="font-bold text-xl mb-3 line-clamp-2">
-                                        <a href="{{ route('news.show', $id) }}" class="hover:text-primary-blue transition-colors">
-                                            {{ $item['title'] }}
-                                        </a>
-                                    </h3>
-                                    <p class="text-gray-600 mb-4 line-clamp-3">
-                                        {{ strip_tags($item['content']) }}
-                                    </p>
-                                    <a href="{{ route('news.show', $id) }}" 
-                                       class="inline-flex items-center text-primary-blue hover:underline">
-                                        Baca selengkapnya
-                                        <i class="fas fa-arrow-right ml-2"></i>
-                                    </a>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            @foreach($published_news as $id => $item)
+                <!-- Bungkus seluruh card dengan link -->
+                <a href="{{ route('news.show', ['id' => $id]) }}" class="block group">
+                    <div class="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300">
+                        <div class="relative h-48">
+                            <img src="{{ Storage::url($item['image']) }}" 
+                                 alt="{{ $item['title'] }}"
+                                 class="w-full h-full object-cover"
+                                 onerror="this.src='{{ asset('img/default-news.jpg') }}'">
+                            <div class="absolute top-4 left-4 bg-primary-blue text-white px-3 py-1 rounded-full text-sm">
+                                {{ strtoupper($item['category']) }}
+                            </div>
+                        </div>
+                        
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2 text-gray-800">{{ $item['title'] }}</h3>
+                            <p class="text-gray-600 mb-4">
+                                {{ \Illuminate\Support\Str::limit(strip_tags($item['content']), 100) }}
+                            </p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm text-gray-500">
+                                    {{ \Carbon\Carbon::parse($item['created_at'])->format('d M Y') }}
+                                </span>
+                                <!-- Tombol baca selengkapnya -->
+                                <div class="inline-flex items-center text-primary-blue group-hover:underline">
+                                    <span>Baca selengkapnya</span>
+                                    <i class="fas fa-arrow-right ml-2 transform group-hover:translate-x-1 transition-transform"></i>
                                 </div>
                             </div>
-                        @endforeach
-                    @else
-                        <div class="col-span-3 text-center py-12">
-                            <p class="text-gray-500">Belum ada berita yang dipublikasikan</p>
                         </div>
-                    @endif
-                </div>
+                    </div>
+                </a>
+            @endforeach
 
-                <!-- Navigation Buttons -->
-                <button id="prevBtn" class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-6 bg-white p-3 rounded-full shadow-lg hover:bg-gray-100 transition-all">
-                    <i class="fas fa-chevron-left text-gray-600"></i>
-                </button>
-                <button id="nextBtn" class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-6 bg-white p-3 rounded-full shadow-lg hover:bg-gray-100 transition-all">
-                    <i class="fas fa-chevron-right text-gray-600"></i>
-                </button>
-            </div>
+            @if(count($published_news) == 0)
+                <div class="col-span-3 text-center py-12">
+                    <i class="fas fa-newspaper text-gray-300 text-5xl mb-4"></i>
+                    <p class="text-gray-500">Belum ada berita terbaru</p>
+                </div>
+            @endif
         </div>
     </div>
 
@@ -774,29 +758,28 @@
                     items[i].classList.add('hidden');
                 }
             }
-        }
 
-        // Event listener untuk tombol next
-        nextBtn.addEventListener('click', () => {
-            currentSlide = (currentSlide + 1) % totalSlides;
-            showSlide(currentSlide);
+            // Event listener untuk tombol next
+            nextBtn.addEventListener('click', () => {
+                currentSlide = (currentSlide + 1) % totalSlides;
+                showSlide(currentSlide);
+            });
+
+            // Event listener untuk tombol previous
+            prevBtn.addEventListener('click', () => {
+                currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+                showSlide(currentSlide);
+            });
+
+            // Auto slide setiap 5 detik
+            setInterval(() => {
+                currentSlide = (currentSlide + 1) % totalSlides;
+                showSlide(currentSlide);
+            }, 5000);
+
+            // Tampilkan slide pertama
+            showSlide(0);
         });
-
-        // Event listener untuk tombol previous
-        prevBtn.addEventListener('click', () => {
-            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
-            showSlide(currentSlide);
-        });
-
-        // Auto slide setiap 5 detik
-        setInterval(() => {
-            currentSlide = (currentSlide + 1) % totalSlides;
-            showSlide(currentSlide);
-        }, 5000);
-
-        // Tampilkan slide pertama
-        showSlide(0);
-    });
     </script>
     <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -839,7 +822,7 @@
 
         // Tampilkan slide pertama
         showSlide(0);
-    });
+        });
     </script>
 </body>
 </html>
