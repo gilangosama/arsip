@@ -92,18 +92,29 @@
                     <div
                         class="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
                         <div class="relative">
-                            <img src="{{ Storage::url($item['image']) }}" alt="Berita"
-                                class="w-full h-48 object-cover">
+                            @if(isset($item['image']) && Storage::disk('public')->exists($item['image']))
+                                <img src="{{ Storage::url($item['image']) }}" 
+                                     alt="{{ $item['title'] }}"
+                                     class="w-full h-48 object-cover lazy"
+                                     loading="lazy"
+                                     data-src="{{ Storage::url($item['image']) }}"
+                                     onerror="this.onerror=null; this.src='{{ asset('img/default-news.jpg') }}'; this.className='w-full h-48 object-cover';">
+                            @else
+                                <img src="{{ asset('img/default-news.jpg') }}" 
+                                     alt="Default Image" 
+                                     class="w-full h-48 object-cover">
+                            @endif
                             <div
                                 class="absolute top-4 left-4 bg-primary-blue text-white text-xs px-4 py-1.5 rounded-full font-medium tracking-wider">
                                 {{ strtoupper($item['category']) }}</div>
                         </div>
                         <div class="p-6">
-                            <h3 class="font-bold text-xl mb-3 line-clamp-2">
-                                <a href="#"
-                                    class="hover:text-primary-blue transition-colors">{{ $item['title'] }}</a>
+                            <h3 class="font-bold text-xl mb-3 line-clamp-2 hover:text-primary-blue transition-colors">
+                                <a href="{{ route('news.show', $id) }}">{{ $item['title'] }}</a>
                             </h3>
-                            <p class="text-gray-600 mb-4 line-clamp-3">{{ $item['content'] }}</p>
+                            <p class="text-gray-600 mb-4 line-clamp-3">
+                                {{ strip_tags($item['content']) }}
+                            </p>
                             <div class="flex items-center justify-between text-sm text-gray-500">
                                 <div class="flex items-center">
                                     <i class="far fa-user mr-2"></i>
@@ -114,7 +125,8 @@
                                     <span>{{ \Carbon\Carbon::parse($item['created_at'])->format('d M Y') }}</span>
                                 </div>
                             </div>
-                            <a href="#" class="mt-4 inline-flex items-center text-primary-blue hover:underline">
+                            <a href="{{ route('news.show', $id) }}"
+                                class="mt-4 inline-flex items-center text-primary-blue hover:underline group">
                                 Baca selengkapnya
                                 <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
                             </a>
@@ -124,16 +136,18 @@
             </div>
 
             <!-- Pagination -->
-            <div class="mt-12 flex justify-center">
-                <nav class="inline-flex rounded-xl shadow-lg bg-white p-2">
-                    @if (isset($perPage) && $perPage > 0)
+            @if ($total > $perPage)
+                <div class="mt-8 flex justify-center">
+                    <nav class="flex items-center space-x-2">
                         @for ($i = 1; $i <= ceil($total / $perPage); $i++)
-                            <a href="{{ route('news.index', array_merge(request()->query(), ['page' => $i])) }}"
-                                class="px-4 py-2 {{ $i == $page ? 'bg-primary-blue text-white' : 'hover:bg-gray-50 text-gray-500' }} rounded-lg">{{ $i }}</a>
+                            <a href="{{ request()->fullUrlWithQuery(['page' => $i]) }}"
+                                class="px-3 py-1 rounded {{ $page == $i ? 'bg-primary-blue text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200' }}">
+                                {{ $i }}
+                            </a>
                         @endfor
-                    @endif
-                </nav>
-            </div>
+                    </nav>
+                </div>
+            @endif
         </div>
     </div>
 

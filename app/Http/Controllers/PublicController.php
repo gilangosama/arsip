@@ -7,58 +7,155 @@ use Kreait\Firebase\Factory;
 
 class PublicController extends Controller
 {
-    protected $database;
+    protected $auth, $database;
 
     public function __construct()
     {
-        $factory = (new Factory)
-            ->withServiceAccount(storage_path(config('firebase.credentials')))
-            ->withDatabaseUri(config('firebase.database_url'));
+        try {
+            $factory = (new Factory)
+                ->withServiceAccount(storage_path(config('firebase.credentials')))
+                ->withDatabaseUri(config('firebase.database_url'));
 
-        $this->database = $factory->createDatabase();
+            $this->auth = $factory->createAuth();
+            $this->database = $factory->createDatabase();
+        } catch (\Exception $e) {
+            \Log::error('Error initializing Firebase: ' . $e->getMessage());
+        }
     }
 
     public function news()
     {
-        $news = $this->database->getReference('news')->getValue();
-        $perPage = 10; // Ensure $perPage is defined
-        $total = count($news);
-        $page = 1;
-        return view('news', compact('news', 'total', 'perPage', 'page'));
+        // Ambil semua berita
+        $news = $this->database->getReference('news')->getValue() ?? [];
+
+        // Filter hanya berita yang published
+        $publishedNews = [];
+        foreach ($news as $id => $item) {
+            if (isset($item['status']) && strtolower($item['status']) === 'published') {
+                $publishedNews[$id] = $item;
+            }
+        }
+
+        // Urutkan berdasarkan created_at terbaru
+        if (!empty($publishedNews)) {
+            uasort($publishedNews, function($a, $b) {
+                return strtotime($b['created_at'] ?? '0') - strtotime($a['created_at'] ?? '0');
+            });
+        }
+
+        // Pagination
+        $perPage = 10;
+        $page = request()->input('page', 1);
+        $total = count($publishedNews);
+        $paginatedNews = array_slice($publishedNews, ($page - 1) * $perPage, $perPage);
+
+        return view('news', [
+            'news' => $paginatedNews,
+            'total' => $total,
+            'perPage' => $perPage,
+            'page' => $page
+        ]);
     }
 
     public function filterNews(Request $request)
     {
-        $query = $this->database->getReference('news')->getValue();
+        $news = $this->database->getReference('news')->getValue() ?? [];
+        
+        // Filter published terlebih dahulu
+        $publishedNews = array_filter($news, function($item) {
+            return isset($item['status']) && strtolower($item['status']) === 'published';
+        });
 
-        // Filter by search
+        // Filter berdasarkan pencarian
         if ($request->has('search')) {
-            $query = array_filter($query, function ($item) use ($request) {
-                return stripos($item['title'], $request->input('search')) !== false;
+            $search = strtolower($request->input('search'));
+            $publishedNews = array_filter($publishedNews, function($item) use ($search) {
+                return str_contains(strtolower($item['title']), $search) ||
+                       str_contains(strtolower($item['content']), $search);
             });
         }
 
-        // Filter by category
-        if ($request->has('category') && $request->input('category') != '') {
-            $query = array_filter($query, function ($item) use ($request) {
-                return $item['category'] == $request->input('category');
+        // Filter berdasarkan kategori
+        if ($request->has('category') && $request->input('category') !== '') {
+            $category = strtolower($request->input('category'));
+            $publishedNews = array_filter($publishedNews, function($item) use ($category) {
+                return strtolower($item['category']) === $category;
+            });
+        }
+
+        // Urutkan berdasarkan created_at terbaru
+        if (!empty($publishedNews)) {
+            uasort($publishedNews, function($a, $b) {
+                return strtotime($b['created_at'] ?? '0') - strtotime($a['created_at'] ?? '0');
             });
         }
 
         // Pagination
         $perPage = 10;
         $page = $request->input('page', 1);
-        $total = count($query);
-        if ($perPage > 0) {
-            $news = array_slice($query, ($page - 1) * $perPage, $perPage);
-        } else {
-            $news = $query;
-        }
+        $total = count($publishedNews);
+        $paginatedNews = array_slice($publishedNews, ($page - 1) * $perPage, $perPage);
 
-        return view('news', compact('news', 'total', 'perPage', 'page'));
+        return view('news', [
+            'news' => $paginatedNews,
+            'total' => $total,
+            'perPage' => $perPage,
+            'page' => $page
+        ]);
     }
 
     public function kritik(Request $request) {
         dd($request);
+    }
+
+    public function showNews($id)
+    {
+        try {
+            $news = $this->database->getReference('news/' . $id)->getValue();
+            
+            if (!$news) {
+                return redirect()->route('welcome')->with('error', 'Berita tidak ditemukan');
+            }
+
+            $news['id'] = $id;
+            return view('news-detail', compact('news'));
+        } catch (\Exception $e) {
+            \Log::error('Error showing news: ' . $e->getMessage());
+            return redirect()->route('welcome')->with('error', 'Terjadi kesalahan');
+        }
+    }
+
+    public function index()
+    {
+        $news = $this->database->getReference('news')->getValue() ?? [];
+        return view('welcome', compact('news'));
+    }
+
+    public function welcome()
+    {
+        try {
+            // Ambil data berita
+            $news = $this->database->getReference('news')->getValue() ?? [];
+            
+            // Filter berita published
+            $published_news = [];
+            foreach ($news as $id => $item) {
+                if (isset($item['status']) && strtolower($item['status']) === 'published') {
+                    $published_news[$id] = $item;
+                }
+            }
+            
+            // Debug
+            // dd([
+            //     'total_news' => count($news),
+            //     'published_news' => $published_news
+            // ]);
+
+            return view('welcome', compact('published_news'));
+            
+        } catch (\Exception $e) {
+            \Log::error('Error in welcome page: ' . $e->getMessage());
+            return view('welcome', ['published_news' => []]);
+        }
     }
 }

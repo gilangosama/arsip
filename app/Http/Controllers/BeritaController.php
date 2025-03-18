@@ -102,9 +102,20 @@ class BeritaController extends Controller
 
     public function show($id)
     {
-        $news = $this->database->getReference('news/' . $id)->getValue();
-        $news['id'] = $id; // Add id to the news array
-        return view('admin.news.show', compact('news'));
+        try {
+            $news = $this->database->getReference('news/' . $id)->getValue();
+            
+            if (!$news) {
+                Alert::error('Error', 'Berita tidak ditemukan');
+                return redirect()->route('admin.news.index');
+            }
+            
+            $news['id'] = $id; // Tambahkan ID ke array berita
+            return view('admin.news.show', compact('news'));
+        } catch (\Exception $e) {
+            Alert::error('Error', 'Terjadi kesalahan saat memuat berita');
+            return redirect()->route('admin.news.index');
+        }
     }
 
     public function edit($id)
