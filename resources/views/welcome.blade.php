@@ -567,7 +567,7 @@
                     
                     <!-- Bagian Kanan - Form -->
                     <div class="p-10 md:w-3/5 bg-white">
-                        <form id="kritikSaranForm" action="{{ route('kritik-saran.store') }}" method="POST" class="space-y-6">
+                        <form id="kritikSaranForm" action="{{ route('kritik') }}" method="POST" class="space-y-6">
                             @csrf
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div class="form-group">

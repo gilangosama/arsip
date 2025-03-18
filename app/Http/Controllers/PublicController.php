@@ -58,13 +58,7 @@ class PublicController extends Controller
         return view('news', compact('news', 'total', 'perPage', 'page'));
     }
 
-    public function about()
-    {
-        return view('public.about');
-    }
-
-    public function contact()
-    {
-        return view('public.contact');
+    public function kritik(Request $request) {
+        dd($request);
     }
 }
