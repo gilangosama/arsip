@@ -28,7 +28,7 @@ Route::middleware([FirebaseAuthMiddleware::class])->group(function () {
 //         return view('dashboard');
 //     })->name('dashboard');
 // });
-// Route::post('/kritik-saran', [KritikSaranController::class, 'store'])->name('kritik-saran.store');
+Route::post('/kritik-saran', [PublicController::class, 'store'])->name('kritik-saran.store');
 
 Route::get('/berita', [PublicController::class, 'news'])->name('news.index');
 Route::get('/berita/search', [PublicController::class, 'filterNews'])->name('news.filter');
