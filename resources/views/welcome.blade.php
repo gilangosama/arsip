@@ -68,7 +68,7 @@
 </head>
 <body class="relative">
     <!-- Carousel/Header Section (positioned behind navbar) -->
-    {{-- <div class="absolute inset-0 z-0">
+    <div class="absolute inset-0 z-0">
         <!-- Carousel -->
         <div id="carousel" class="relative h-screen w-full overflow-hidden">
             <!-- Carousel items with background image -->
@@ -115,7 +115,7 @@
                 </svg>
             </button>
         </div>
-    </div> --}}
+    </div>
 
     <!-- Top Bar -->
     <div class="bg-gradient-to-r from-primary-blue to-blue-800 text-white py-2 relative z-50">
@@ -452,19 +452,21 @@
                                style="pointer-events: auto">
                     </div>
                     
-                    <!-- Bagian Kanan - Form -->
-                    <div class="p-10 md:w-3/5 bg-white">
-                        <form id="kritikSaranForm" action="{{ route('kritik-saran.store') }}" method="POST" class="space-y-6">
-                            @csrf
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div class="form-group">
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Nama Lengkap</label>
-                                    <input type="text" name="name" class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-primary-blue focus:border-transparent transition-all" placeholder="Masukkan nama lengkap">
-                                </div>
-                                <div class="form-group">
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
-                                    <input type="email" name="email" class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-primary-blue focus:border-transparent transition-all" placeholder="Masukkan email">
-                                </div>
+                    <!-- Email -->
+                    <div class="group relative">
+                        <label for="email" class="block text-sm font-semibold text-gray-700 mb-2 relative z-20">
+                            <i class="fas fa-envelope text-primary-blue mr-2"></i>Email
+                        </label>
+                        <input type="email" 
+                               id="email" 
+                               name="email" 
+                               class="w-full px-4 py-3 bg-gray-50 rounded-lg border border-gray-200 
+                                      focus:border-primary-blue focus:ring-2 focus:ring-primary-blue/20 
+                                      transition-all duration-300 outline-none
+                                      hover:border-primary-blue/50
+                                      relative z-20"
+                               placeholder="Masukkan alamat email"
+                               style="pointer-events: auto">
                             </div>
                             
                     <!-- Subjek -->
@@ -697,7 +699,7 @@
                 } else {
                     items[i].classList.add('hidden');
                 }
-            };
+            }
 
             // Event listener untuk tombol next
             nextBtn.addEventListener('click', () => {
