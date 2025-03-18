@@ -384,7 +384,7 @@
                             <img src="{{ Storage::url($item['image']) }}" 
                                  alt="{{ $item['title'] }}"
                                  class="w-full h-full object-cover"
-                                 onerror="this.src='{{ asset('img/default-news.jpg') }}'">
+                                 onerror="this.src='') }}'">
                             <div class="absolute top-4 left-4 bg-primary-blue text-white px-3 py-1 rounded-full text-sm">
                                 {{ strtoupper($item['category']) }}
                             </div>
@@ -521,64 +521,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Tambahkan notifikasi div -->
-    {{-- <div id="notification" class="fixed hidden bottom-4 right-4 p-4 rounded-lg shadow-lg"></div> --}}
-
-        {{-- <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const form = document.getElementById('contactForm');
-            
-            // Remove any existing event listeners
-            const newForm = form.cloneNode(true);
-            form.parentNode.replaceChild(newForm, form);
-            
-            newForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                e.stopPropagation(); // Prevent event bubbling
-                
-                // Tambahkan efek loading pada button
-                const button = this.querySelector('button[type="submit"]');
-                const originalContent = button.innerHTML;
-                button.innerHTML = '';
-                button.classList.add('loading');
-                
-                // Simulasi loading (ganti dengan actual form submission)
-                setTimeout(() => {
-                    button.classList.remove('loading');
-                    button.innerHTML = originalContent;
-                    
-                    // Reset form
-                    this.reset();
-                    
-                    // Tampilkan notifikasi sukses
-                    showNotification('Pesan berhasil terkirim!', 'success');
-                }, 1500);
-            });
-        });
-
-        function showNotification(message, type = 'success') {
-            const notification = document.createElement('div');
-            notification.className = `fixed bottom-4 right-4 px-6 py-3 rounded-lg shadow-lg text-white 
-                                    transform transition-all duration-300 ${type === 'success' ? 'bg-green-500' : 'bg-red-500'}`;
-            notification.style.zIndex = '50';
-            notification.textContent = message;
-            
-            document.body.appendChild(notification);
-            
-            // Animate in
-            setTimeout(() => {
-                notification.style.transform = 'translateY(-10px)';
-            }, 100);
-            
-            // Remove after delay
-            setTimeout(() => {
-                notification.style.transform = 'translateY(10px)';
-                notification.style.opacity = '0';
-                setTimeout(() => notification.remove(), 3000);
-            }, 3000);
-        }
-        </script> --}}
 
     <!-- Footer yang Dipercantik -->
     <footer class="bg-gradient-to-b from-gray-900 to-primary-blue text-white pt-20 pb-6 relative z-20">
@@ -722,7 +664,7 @@
     document.addEventListener("DOMContentLoaded", function() {
         // Cache gambar default
         const defaultImg = new Image();
-        defaultImg.src = "{{ asset('img/default-news.jpg') }}";
+        defaultImg.src = "";
         
         // Lazy loading untuk gambar
         const lazyImages = document.querySelectorAll("img.lazy");
