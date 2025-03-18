@@ -11,16 +11,12 @@ class PublicController extends Controller
 
     public function __construct()
     {
-        try {
-            $factory = (new Factory)
-                ->withServiceAccount(storage_path(config('firebase.credentials')))
-                ->withDatabaseUri(config('firebase.database_url'));
+        $factory = (new Factory)
+            ->withServiceAccount(storage_path(config('firebase.credentials')))
+            ->withDatabaseUri(config('firebase.database_url'));
 
-            $this->auth = $factory->createAuth();
-            $this->database = $factory->createDatabase();
-        } catch (\Exception $e) {
-            \Log::error('Error initializing Firebase: ' . $e->getMessage());
-        }
+        $this->auth = $factory->createAuth();
+        $this->database = $factory->createDatabase();
     }
 
     public function news()
@@ -38,7 +34,7 @@ class PublicController extends Controller
 
         // Urutkan berdasarkan created_at terbaru
         if (!empty($publishedNews)) {
-            uasort($publishedNews, function($a, $b) {
+            uasort($publishedNews, function ($a, $b) {
                 return strtotime($b['created_at'] ?? '0') - strtotime($a['created_at'] ?? '0');
             });
         }
@@ -60,32 +56,32 @@ class PublicController extends Controller
     public function filterNews(Request $request)
     {
         $news = $this->database->getReference('news')->getValue() ?? [];
-        
+
         // Filter published terlebih dahulu
-        $publishedNews = array_filter($news, function($item) {
+        $publishedNews = array_filter($news, function ($item) {
             return isset($item['status']) && strtolower($item['status']) === 'published';
         });
 
         // Filter berdasarkan pencarian
         if ($request->has('search')) {
             $search = strtolower($request->input('search'));
-            $publishedNews = array_filter($publishedNews, function($item) use ($search) {
+            $publishedNews = array_filter($publishedNews, function ($item) use ($search) {
                 return str_contains(strtolower($item['title']), $search) ||
-                       str_contains(strtolower($item['content']), $search);
+                    str_contains(strtolower($item['content']), $search);
             });
         }
 
         // Filter berdasarkan kategori
         if ($request->has('category') && $request->input('category') !== '') {
             $category = strtolower($request->input('category'));
-            $publishedNews = array_filter($publishedNews, function($item) use ($category) {
+            $publishedNews = array_filter($publishedNews, function ($item) use ($category) {
                 return strtolower($item['category']) === $category;
             });
         }
 
         // Urutkan berdasarkan created_at terbaru
         if (!empty($publishedNews)) {
-            uasort($publishedNews, function($a, $b) {
+            uasort($publishedNews, function ($a, $b) {
                 return strtotime($b['created_at'] ?? '0') - strtotime($a['created_at'] ?? '0');
             });
         }
@@ -104,7 +100,8 @@ class PublicController extends Controller
         ]);
     }
 
-    public function kritik(Request $request) {
+    public function store(Request $request)
+    {
         dd($request);
     }
 
@@ -112,7 +109,7 @@ class PublicController extends Controller
     {
         try {
             $news = $this->database->getReference('news/' . $id)->getValue();
-            
+
             if (!$news) {
                 return redirect()->route('welcome')->with('error', 'Berita tidak ditemukan');
             }
@@ -136,7 +133,7 @@ class PublicController extends Controller
         try {
             // Ambil data berita
             $news = $this->database->getReference('news')->getValue() ?? [];
-            
+
             // Filter berita published
             $published_news = [];
             foreach ($news as $id => $item) {
@@ -144,7 +141,7 @@ class PublicController extends Controller
                     $published_news[$id] = $item;
                 }
             }
-            
+
             // Debug
             // dd([
             //     'total_news' => count($news),
@@ -152,9 +149,7 @@ class PublicController extends Controller
             // ]);
 
             return view('welcome', compact('published_news'));
-            
         } catch (\Exception $e) {
-            \Log::error('Error in welcome page: ' . $e->getMessage());
             return view('welcome', ['published_news' => []]);
         }
     }

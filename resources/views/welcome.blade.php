@@ -68,7 +68,7 @@
 </head>
 <body class="relative">
     <!-- Carousel/Header Section (positioned behind navbar) -->
-    <div class="absolute inset-0 z-0">
+    {{-- <div class="absolute inset-0 z-0">
         <!-- Carousel -->
         <div id="carousel" class="relative h-screen w-full overflow-hidden">
             <!-- Carousel items with background image -->
@@ -115,7 +115,7 @@
                 </svg>
             </button>
         </div>
-    </div>
+    </div> --}}
 
     <!-- Top Bar -->
     <div class="bg-gradient-to-r from-primary-blue to-blue-800 text-white py-2 relative z-50">
@@ -755,7 +755,7 @@
                 } else {
                     items[i].classList.add('hidden');
                 }
-            }
+            };
 
             // Event listener untuk tombol next
             nextBtn.addEventListener('click', () => {
