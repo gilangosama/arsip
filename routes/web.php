@@ -8,6 +8,7 @@ use App\Http\Controllers\Auth\FirebaseAuthController;
 use App\Http\Controllers\BeritaController;
 use App\Http\Controllers\FirebaseController;
 use App\Http\Controllers\PublicController;
+use App\Http\Controllers\KritikController;
 use App\Http\Middleware\FirebaseAuthMiddleware;
 
 // Hapus route ini karena duplikat
@@ -44,30 +45,11 @@ Route::middleware([FirebaseAuthMiddleware::class])->prefix('admin')->name('admin
     Route::delete('/news/destroy/{id}', [BeritaController::class, 'destroy'])->name('news.destroy');
 
     // Route untuk halaman kritik & saran admin
-    Route::get('/feedback', function () {
-        return view('admin.feedback');
-    })->name('feedback');
-
-    // Route untuk menangani aksi-aksi pada kritik & saran (opsional, bisa ditambahkan nanti)
-    Route::get('/feedback/{id}', function ($id) {
-        // Logic untuk menampilkan detail
-        return response()->json(['id' => $id]);
-    })->name('feedback.show');
-
-    Route::put('/feedback/{id}/mark-as-read', function ($id) {
-        // Logic untuk menandai sudah dibaca
-        return response()->json(['message' => 'Marked as read']);
-    })->name('feedback.mark-read');
-
-    Route::put('/feedback/{id}/archive', function ($id) {
-        // Logic untuk mengarsipkan
-        return response()->json(['message' => 'Archived']);
-    })->name('feedback.archive');
-
-    Route::delete('/feedback/{id}', function ($id) {
-        // Logic untuk menghapus
-        return response()->json(['message' => 'Deleted']);
-    })->name('feedback.delete');
+    Route::get('/feedback', [KritikController::class, 'index'])->name('feedback');
+    Route::get('/feedback/{id}', [KritikController::class, 'show'])->name('feedback.show');
+    Route::put('/feedback/{id}/mark-as-read', [KritikController::class, 'markAsRead'])->name('feedback.mark-read');
+    Route::put('/feedback/{id}/archive', [KritikController::class, 'archive'])->name('feedback.archive');
+    Route::delete('/feedback/{id}', [KritikController::class, 'destroy'])->name('feedback.delete');
 
     Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 });

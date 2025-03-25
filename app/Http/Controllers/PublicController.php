@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Kreait\Firebase\Factory;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class PublicController extends Controller
 {
@@ -102,7 +103,32 @@ class PublicController extends Controller
 
     public function store(Request $request)
     {
-        dd($request);
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'subject' => 'required|string|max:255',
+            'message' => 'required|string',
+        ], [
+            'name.required' => 'Nama harus diisi',
+            'email.required' => 'Email harus diisi',
+            'email.email' => 'Email tidak valid',
+            'subject.required' => 'Subjek harus diisi',
+            'message.required' => 'Pesan harus diisi',
+        ]);
+
+        $data = [
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+            'subject' => $request->input('subject'),
+            'message' => $request->input('message'),
+            'status' => 'unread',
+            'created_at' => now(),
+        ];
+
+        $this->database->getReference('feedback')->push($data);
+
+        Alert::success('Terima Kasih', 'Pesan Anda telah terkirim.');
+        return redirect()->route('welcome')->with('success', 'Pesan Anda telah terkirim.');
     }
 
     public function showNews($id)
