@@ -72,7 +72,7 @@ class KritikController extends Controller
             return redirect()->route('admin.feedback')->with('error', 'Feedback not found.');
         } else {
             $feedback = $snapshot->getValue();
-            return view('admin.feedback-show', compact('feedback'));
+            return view('admin.feedback_detail', compact('feedback'));
         }
     }
 
