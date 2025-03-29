@@ -10,6 +10,7 @@ use App\Http\Controllers\FirebaseController;
 use App\Http\Controllers\PublicController;
 use App\Http\Controllers\KritikController;
 use App\Http\Middleware\FirebaseAuthMiddleware;
+use App\Http\Controllers\FileUploadController;
 
 // Hapus route ini karena duplikat
 // Route::get('/', function () {
@@ -29,7 +30,7 @@ Route::middleware([FirebaseAuthMiddleware::class])->group(function () {
 //         return view('dashboard');
 //     })->name('dashboard');
 // });
-Route::post('/kritik-saran', [PublicController::class, 'store'])->name('kritik-saran.store');
+Route::post('/kritik-saran', [PublicController::class, 'store'])->name('kritik.store');
 
 Route::get('/berita', [PublicController::class, 'news'])->name('news.index');
 Route::get('/berita/search', [PublicController::class, 'filterNews'])->name('news.filter');
@@ -62,5 +63,11 @@ Route::get('/set', [FirebaseController::class, 'set'])->name('firebase.set');
 Route::get('/read', [FirebaseController::class, 'read'])->name('firebase.read');
 Route::get('/check', [FirebaseController::class, 'userCheck'])->name('firebase.checkuser');
 
+Route::get('/file', [FileUploadController::class, 'create'])->name('file.index');
+Route::get('/upload', [FileUploadController::class, 'index'])->name('file.index');
+Route::post('/upload', [FileUploadController::class, 'store'])->name('file.store');
+
+Route::get('/files', [FileUploadController::class, 'index'])->name('file.index');
+Route::delete('/file/{id}', [FileUploadController::class, 'destroy'])->name('file.destroy');
 
 require __DIR__ . '/auth.php';

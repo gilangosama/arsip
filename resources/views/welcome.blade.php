@@ -507,7 +507,7 @@
                     <p class="text-gray-600 text-sm">Kami sangat menghargai setiap masukan dari Anda</p>
                 </div>
 
-                <form id="FormKritik" class="space-y-6 relative z-30" action="{{ route('kritik-saran.store') }}" method="POST">
+                <form action="{{ route('kritik.store') }}" method="POST" class="space-y-6">
                     @csrf
                     <!-- Nama -->
                     <div class="group relative">
@@ -520,7 +520,7 @@
                                       transition-all duration-300 outline-none
                                       hover:border-primary-blue/50
                                       relative z-20"
-                            placeholder="Masukkan nama lengkap" style="pointer-events: auto">
+                            placeholder="Masukkan nama lengkap" required>
                     </div>
 
                     <!-- Email -->
@@ -534,7 +534,7 @@
                                       transition-all duration-300 outline-none
                                       hover:border-primary-blue/50
                                       relative z-20"
-                            placeholder="Masukkan alamat email" style="pointer-events: auto">
+                            placeholder="Masukkan alamat email" required>
                     </div>
 
                     <!-- Subjek -->
@@ -548,7 +548,7 @@
                                       transition-all duration-300 outline-none
                                       hover:border-primary-blue/50
                                       relative z-20"
-                            placeholder="Masukkan subjek pesan" style="pointer-events: auto">
+                            placeholder="Masukkan subjek pesan" required>
                     </div>
 
                     <!-- Pesan -->
@@ -562,7 +562,7 @@
                                          transition-all duration-300 outline-none resize-none
                                          hover:border-primary-blue/50
                                          relative z-20"
-                            placeholder="Tulis pesan Anda di sini" style="pointer-events: auto"></textarea>
+                            placeholder="Tulis pesan Anda di sini" required></textarea>
                     </div>
 
                     <!-- Submit Button -->
@@ -573,13 +573,17 @@
                                    hover:bg-blue-700 hover:shadow-lg 
                                    active:scale-98 
                                    focus:ring-4 focus:ring-blue-200
-                                   flex items-center justify-center space-x-2
-                                   relative z-20"
-                        style="pointer-events: auto">
+                                   flex items-center justify-center space-x-2">
                         <span>Kirim Pesan</span>
                         <i class="fas fa-paper-plane"></i>
                     </button>
                 </form>
+
+                @if(session('success'))
+                    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">
+                        {{ session('success') }}
+                    </div>
+                @endif
             </div>
         </div>
     </div>

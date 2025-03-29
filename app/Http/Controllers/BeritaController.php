@@ -48,7 +48,7 @@ class BeritaController extends Controller
         // Pagination
         $perPage = 10;
         $page = $request->input('page', 1);
-        $total = count($query);
+        $total = is_countable($query) ? count($query) : 0;
         $news = array_slice($query, ($page - 1) * $perPage, $perPage);
 
         return view('admin.news.index', compact('news', 'total', 'perPage', 'page'));

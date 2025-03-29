@@ -41,6 +41,10 @@
                     <i class="fas fa-comments w-6"></i>
                     <span>Kritik & Saran</span>
                 </a>
+                <a href="{{ route('file.index') }}" class="flex items-center px-4 py-3 bg-gray-700 text-white">
+                    <i class="fas fa-upload w-6"></i>
+                    <span>Upload File</span>
+                </a>
                 {{-- <a href="#" class="flex items-center px-4 py-3 text-gray-300 hover:bg-gray-700 hover:text-white">
                     <i class="fas fa-users w-6"></i>
                     <span>Users</span>
